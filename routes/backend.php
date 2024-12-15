@@ -52,8 +52,9 @@ Route::controller(DynamicPageController::class)->group(function () {
 
 Route::prefix('event')->group(function () {
     Route::get('/', [EventController::class, 'index'])->name('event.index'); // Display form
+    Route::get('/create', [EventController::class, 'create'])->name('event.create'); // Show form to create an event
     Route::post('/store', [EventController::class, 'store'])->name('event.store'); // Handle form submission
-    Route::get('/{id}', [EventController::class, 'show'])->name('event.show'); // View single event
     Route::get('/google-link/{id}', [EventController::class, 'googleLink'])->name('event.googleLink');
     Route::get('/download-ics/{id}', [EventController::class, 'downloadICS'])->name('event.downloadICS');
 });
+

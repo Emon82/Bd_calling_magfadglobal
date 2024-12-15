@@ -51,17 +51,17 @@ $systemSetting = App\Models\SystemSetting::first();
 
                     <ul class="slide-menu">
                         <li><a href="{{ route('event.index') }}" class="slide-item">Event Management</a></li>
-                        <li><a href="{{ route('profile.setting') }}" class="slide-item">Profile Settings</a></li>
+                        <!-- <li><a href="{{ route('profile.setting') }}" class="slide-item">Profile Settings</a></li>
                         <li><a href="{{ route('system.index') }}" class="slide-item">System Settings</a></li>
                         <li><a href="{{ route('mail.setting') }}" class="slide-item">Mail Settings</a></li>
-                        <li><a href="{{ route('stripe.index') }}" class="slide-item">Stripe Settings</a></li>
+                        <li><a href="{{ route('stripe.index') }}" class="slide-item">Stripe Settings</a></li> -->
 
-                        <li>
+                        <!-- <li>
                             <a href="{{ route('dynamic_page.index') }}"
                                 class="slide-item {{ request()->is('admin/dynamic-page*') ? 'active' : '' }}">Dynamic
                                 Page Settings
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
             </ul>

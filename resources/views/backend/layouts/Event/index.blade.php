@@ -3,86 +3,51 @@
 @section('title', 'Event Settings')
 
 @section('content')
-{{-- PAGE-HEADER --}}
 <div class="page-header">
-    <div>
-        <h1 class="page-title">Event Settings</h1>
-    </div>
-    <div class="ms-auto pageheader-btn">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0);">Settings</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Event Settings</li>
-        </ol>
-    </div>
+    <h1 class="page-title">Event Management</h1>
 </div>
-{{-- PAGE-HEADER --}}
 
+@if (session('success'))
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-<div class="row">
-    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <div class="card box-shadow-0">
-            <div class="card-body">
-                <form method="post" action="{{ route('event.store') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row mb-4">
-                        <label for="title" class="col-md-3 form-label">Event Title</label>
-                        <div class="col-md-9">
-                            <input class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                                placeholder="Enter event title" type="text" value="{{ old('title') }}">
-                            @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label for="start_time" class="col-md-3 form-label">Start Time</label>
-                        <div class="col-md-9">
-                            <input class="form-control @error('start_time') is-invalid @enderror" id="start_time"
-                                name="start_time" placeholder="Enter start time" type="datetime-local" value="{{ old('start_time') }}">
-                            @error('start_time')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label for="end_time" class="col-md-3 form-label">End Time</label>
-                        <div class="col-md-9">
-                            <input class="form-control @error('end_time') is-invalid @enderror" id="end_time"
-                                name="end_time" placeholder="Enter end time" type="datetime-local" value="{{ old('end_time') }}">
-                            @error('end_time')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label for="location" class="col-md-3 form-label">Location</label>
-                        <div class="col-md-9">
-                            <input class="form-control @error('location') is-invalid @enderror" id="location" name="location"
-                                placeholder="Enter location" type="text" value="{{ old('location') }}">
-                            @error('location')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <label for="description" class="col-md-3 form-label">Description</label>
-                        <div class="col-md-9">
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"
-                                placeholder="Enter description">{{ old('description') }}</textarea>
-                            @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row justify-content-end">
-                        <div class="col-sm-9">
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h2>Upcoming Events</h2>
+    </div>
+    <div class="mb-3">
+        <a href="{{ route('event.create') }}" class="btn btn-primary">Add Event</a>
+    </div>
+    <div class="card-body">
+        @if($events->isNotEmpty())
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($events as $event)
+                <tr>
+                    <td>{{ $event->title }}</td>
+                    <td>{{ $event->start_time }}</td>
+                    <td>{{ $event->end_time }}</td>
+                    <td>{{ $event->location }}</td>
+                    <td>
+                        <a href="{{ route('event.googleLink', $event->id) }}" target="_blank" class="btn btn-info btn-sm">Google Calendar</a>
+                        <a href="{{ route('event.downloadICS', $event->id) }}" class="btn btn-success btn-sm">Download ICS</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @else
+        <p>No events available.</p>
+        @endif
     </div>
 </div>
 @endsection
