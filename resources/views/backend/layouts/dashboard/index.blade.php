@@ -24,8 +24,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h3 class="mb-2 fw-semibold">1</h3>
-                            <p class="text-muted fs-13 mb-0">Total Agency</p>
+                            <h3 class="mb-2 fw-semibold">{{ $totalEvents }}</h3>
+                            <p class="text-muted fs-13 mb-0">Total Event</p>
                         </div>
                         <div class="col col-auto top-icn dash">
                             <div class="counter-icon bg-primary dash ms-auto box-shadow-primary">
@@ -319,3 +319,6 @@
         </div>
     </div>
 @endsection
+
+
+

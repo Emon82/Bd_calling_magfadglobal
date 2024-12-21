@@ -9,8 +9,9 @@ use App\Http\Controllers\Web\Backend\Settings\StripeSettingController;
 use App\Http\Controllers\Web\Backend\Settings\SystemSettingController;
 use Illuminate\Support\Facades\Route;
 
-//! Route for Dashboard
+//! Route for Dashboard 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 //! Route for Profile Settings
 Route::controller(ProfileController::class)->group(function () {
@@ -56,5 +57,6 @@ Route::prefix('event')->group(function () {
     Route::post('/store', [EventController::class, 'store'])->name('event.store'); // Handle form submission
     Route::get('/google-link/{id}', [EventController::class, 'googleLink'])->name('event.googleLink');
     Route::get('/download-ics/{id}', [EventController::class, 'downloadICS'])->name('event.downloadICS');
+    Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+    // Route::get('/total-events', [EventController::class, 'getTotalEvents']);
 });
-

@@ -15,7 +15,7 @@
     <div class="card-header">
         <h2>Upcoming Events</h2>
     </div>
-    <div class="mb-3">
+    <div class="mb-3" style="display: flex; justify-content:end;margin:0 20px">
         <a href="{{ route('event.create') }}" class="btn btn-primary">Add Event</a>
     </div>
     <div class="card-body">
@@ -40,6 +40,13 @@
                     <td>
                         <a href="{{ route('event.googleLink', $event->id) }}" target="_blank" class="btn btn-info btn-sm">Google Calendar</a>
                         <a href="{{ route('event.downloadICS', $event->id) }}" class="btn btn-success btn-sm">Download ICS</a>
+                        <form action="{{ route('event.destroy', $event->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this event?')">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

@@ -12,7 +12,7 @@ class UserSeeder extends Seeder {
             [
                 'id'                => 1,
                 'name'              => 'admin',
-                'email'             => 'admin@admin.com',
+                'email'             => 'admin@gmail.com',
                 'email_verified_at' => null,
                 'password'          => Hash::make('12345678'),
                 'terms_and_policy'  => 1,

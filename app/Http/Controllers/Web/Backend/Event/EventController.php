@@ -16,9 +16,9 @@ class EventController extends Controller
     }
 
     public function create()
-{
-    return view('backend.layouts.event.create'); // The view to create an event
-}
+    {
+        return view('backend.layouts.event.create'); // The view to create an event
+    }
 
     public function store(Request $request)
     {
@@ -37,24 +37,22 @@ class EventController extends Controller
     }
 
     public function googleLink($id)
-{
-    $event = Event::findOrFail($id);
+    {
+        $event = Event::findOrFail($id);
 
-    $googleLink = 'https://www.google.com/calendar/render';
-    $queryParams = [
-        'action' => 'TEMPLATE',
-        'text' => $event->title,
-        'dates' => Carbon::parse($event->start_time)->format('Ymd\THis\Z') . '/' . Carbon::parse($event->end_time)->format('Ymd\THis\Z'),
-        'details' => $event->description,
-        'location' => $event->location,
-    ];
+        $googleLink = 'https://www.google.com/calendar/render';
+        $queryParams = [
+            'action' => 'TEMPLATE',
+            'text' => $event->title,
+            'dates' => Carbon::parse($event->start_time)->format('Ymd\THis\Z') . '/' . Carbon::parse($event->end_time)->format('Ymd\THis\Z'),
+            'details' => $event->description,
+            'location' => $event->location,
+        ];
 
-    $googleLink .= '?' . http_build_query($queryParams);
+        $googleLink .= '?' . http_build_query($queryParams);
 
-    return redirect()->route('event.index')
-                     ->with('googleLink', $googleLink)
-                     ->with('success', 'Event added to Google Calendar');
-}
+        return redirect($googleLink);
+    }
 
     public function downloadICS($id)
     {
@@ -72,5 +70,17 @@ class EventController extends Controller
         return response($content)
             ->header('Content-Type', 'text/calendar')
             ->header('Content-Disposition', 'inline; filename="event.ics"');
+    }
+
+    public function destroy($id)
+    {
+        $event = Event::find($id);
+
+        if ($event) {
+            $event->delete();
+            return redirect()->route('event.index')->with('success', 'Event deleted successfully.');
+        }
+
+        return redirect()->route('event.index')->with('error', 'Event not found.');
     }
 }
